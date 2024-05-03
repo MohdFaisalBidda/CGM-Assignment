@@ -7,7 +7,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -18,6 +17,8 @@ import Loader from "../components/Loader";
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { setLocalStorageKeyValue } from "@/lib/localStorageService";
+import Link from "next/link";
 
 const defaultTheme = createTheme();
 
@@ -56,6 +57,7 @@ function Login() {
       if (responseData && responseData.signIn) {
         console.log("signed in user", responseData.signIn);
         toast.success("User Signed In Successfully!");
+        setLocalStorageKeyValue("user", JSON.stringify(responseData.signIn));
         navigate.push("/");
       } else {
         toast.error("Invalid response data");
@@ -71,6 +73,12 @@ function Login() {
         component="main"
         maxWidth="xs"
         className="flex justify-center items-center h-screen"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          height: "100vh",
+        }}
       >
         <CssBaseline />
         <Box
@@ -124,7 +132,10 @@ function Login() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link
+                  href={"/Signup"}
+                  className="text-sm text-blue-600 hover:underline"
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

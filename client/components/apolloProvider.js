@@ -6,7 +6,7 @@ const {
   ApolloProvider,
 } = require("@apollo/client");
 
-export const Provider = ({ children }) => {
+export const ProviderApollo = ({ children }) => {
   const apolloClient = new ApolloClient({
     uri: "http://localhost:4000/graphql",
     cache: new InMemoryCache(),
@@ -15,4 +15,4 @@ export const Provider = ({ children }) => {
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 };
 
-export default Provider;
+export default ProviderApollo;

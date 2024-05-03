@@ -18,6 +18,7 @@ import { gql, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Loader from "../components/Loader";
+import { setLocalStorageKeyValue } from "@/lib/localStorageService";
 
 const defaultTheme = createTheme();
 
@@ -59,7 +60,8 @@ function Register() {
       if (responseData && responseData.signUp) {
         console.log("signed up user", responseData.signUp);
         toast.success("User Signed Up Successfully!");
-        navigate.push("/Signin");
+        setLocalStorageKeyValue("user", JSON.stringify(responseData.signIn));
+        navigate.push("/");
       } else {
         toast.error("Invalid response data");
       }
@@ -75,6 +77,12 @@ function Register() {
         component="main"
         maxWidth="xs"
         className="flex items-center justify-center h-screen"
+        sx={{
+          display:"flex",
+          flexDirection:"column",
+          alignItems:"center",
+          height:"100vh"
+        }}
       >
         <CssBaseline />
         <Box
