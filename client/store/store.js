@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "./userSlice";
+import userReducer from "./userSlice";
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    followCount: userSlice,
+    user: userReducer,
   },
 });
+
+export default store

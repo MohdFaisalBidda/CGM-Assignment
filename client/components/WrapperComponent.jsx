@@ -5,6 +5,8 @@ import { URLS } from "../lib/constants";
 import dynamic from "next/dynamic";
 import * as React from "react";
 import { getLocalStorageKeyValue } from "../lib/localStorageService";
+import { Provider } from "react-redux";
+import store from "@/store/store";
 
 export default function WrapperComponent({ children }) {
   const user = getLocalStorageKeyValue("user");
@@ -36,5 +38,5 @@ export default function WrapperComponent({ children }) {
     return <SignUp />;
   }
 
-  return <div>{children}</div>;
+  return <Provider store={store}>{children}</Provider>;
 }

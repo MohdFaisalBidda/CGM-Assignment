@@ -12,13 +12,19 @@ import Container from "@mui/material/Container";
 import PersonIcon from "@mui/icons-material/Person";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import { getLocalStorageKeyValue } from "@/lib/localStorageService";
 import { Badge } from "@mui/material";
+import { useSelector } from "react-redux";
+import { deleteLocalStorageKeyValue } from "@/lib/localStorageService";
+import { useRouter } from "next/navigation";
 
 function Header() {
-  const user = getLocalStorageKeyValue("user");
-  console.log(user.user?.followers, "user");
+  const { followCount } = useSelector((state) => state.user);
+  const navigate = useRouter();
 
+  const handleLogout = () => {
+    deleteLocalStorageKeyValue("user");
+    navigate.push("/Signin");
+  };
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -60,15 +66,15 @@ function Header() {
           </Typography>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip>
-              <IconButton sx={{ p: 0 }}>
-                <Badge
-                  badgeContent={user.user?.followers.toString()}
-                  color="error"
-                >
+              <IconButton sx={{ pr: 2 }}>
+                <Badge badgeContent={followCount.toString()} color="error">
                   <PersonIcon />
                 </Badge>
               </IconButton>
             </Tooltip>
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
           </Box>
         </Toolbar>
       </Container>

@@ -4,8 +4,6 @@ import ProviderApollo from "@/components/apolloProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import WrapperComponent from "@/components/WrapperComponent";
-import { Provider } from "react-redux";
-import { store } from "@/store/store";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <ProviderApollo>
-          {/* <Provider store={store}> */}
-            <WrapperComponent>{children}</WrapperComponent>
-          {/* </Provider> */}
+          <WrapperComponent>{children}</WrapperComponent>
         </ProviderApollo>
         <ToastContainer />
       </body>

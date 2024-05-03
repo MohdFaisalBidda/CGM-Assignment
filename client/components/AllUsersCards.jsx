@@ -25,7 +25,6 @@ function AllUsersCards() {
     if (!loading && data) {
       setUsers(data.getUsers);
     }
-    console.log(data);
   }, [loading, data]);
 
   const indexOfLastUser = currentPage * usersPerPage;

@@ -5,17 +5,16 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
+import { useDispatch } from "react-redux";
+import { increaseFollowCount } from "@/store/userSlice";
 
 export default function ProfileCard({ username, firstname }) {
+  const dispatch = useDispatch();
+
+  const handleFollow = () => {
+    dispatch(increaseFollowCount());
+  };
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -25,7 +24,9 @@ export default function ProfileCard({ username, firstname }) {
         <Typography color="text.secondary">{firstname}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="large">Follow</Button>
+        <Button size="large" onClick={handleFollow}>
+          Follow
+        </Button>
       </CardActions>
     </Card>
   );

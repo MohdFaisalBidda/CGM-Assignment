@@ -16,5 +16,4 @@ export const userSlice = createSlice({
 
 export const { increaseFollowCount } = userSlice.actions;
 
-
 export default userSlice.reducer;
