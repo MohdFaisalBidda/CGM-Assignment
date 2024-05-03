@@ -4,7 +4,6 @@ import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-
 const generateToken = (user) => {
   return jwt.sign({ userId: user.id }, process.env.JWT_KEY, {
     expiresIn: "7d",
@@ -63,12 +62,13 @@ const resolvers = {
     signIn: async (_, { input }) => {
       const { email, password } = input;
 
-      const user = await User.findOne({email});
+      const user = await User.findOne({ email });
       if (!user) {
         throw new Error("Invalid credentials");
       }
 
-      const isValidPass = bcrypt.compare(password, user.password);
+      const isValidPass = await bcrypt.compare(password, user.password);
+      console.log(password, user.password);
       if (!isValidPass) {
         throw new Error("Invalid credentials");
       }
