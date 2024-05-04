@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -41,6 +41,16 @@ const SIGN_UP = gql`
 
 function Register() {
   const [signUp, { loading, error }] = useMutation(SIGN_UP);
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const handleChange = (event) => {
+    const { value } = event.target;
+    const regex = /^\d{0,10}$/; 
+
+    if (regex.test(value)) {
+      setPhoneNumber(value);
+    }
+  };
   const navigate = useRouter();
 
   const handleSubmit = async (event) => {
@@ -60,7 +70,7 @@ function Register() {
       if (responseData && responseData.signUp) {
         console.log("signed up user", responseData.signUp);
         toast.success("User Signed Up Successfully!");
-        setLocalStorageKeyValue("user", JSON.stringify(responseData.signIn));
+        setLocalStorageKeyValue("user", JSON.stringify(responseData.signUp));
         navigate.push("/");
       } else {
         toast.error("Invalid response data");
@@ -78,10 +88,10 @@ function Register() {
         maxWidth="xs"
         className="flex items-center justify-center h-screen"
         sx={{
-          display:"flex",
-          flexDirection:"column",
-          alignItems:"center",
-          height:"100vh"
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          height: "100vh",
         }}
       >
         <CssBaseline />
@@ -155,7 +165,10 @@ function Register() {
                   name="phoneNumber"
                   label="Phone Number"
                   type="text"
+                  pattern="^\d{10}$"
                   id="pNumber"
+                  value={phoneNumber}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
